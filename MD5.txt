@@ -1,0 +1,32 @@
+import java.math.BigInteger;
+import java.security.MessageDigest;
+public class MD5 {
+public static void main(String args[]) throws Exception
+{
+	MessageDigest md=MessageDigest.getInstance("MD5");
+	System.out.println("Messasge digest object info");
+	System.out.println("Algorithom :"+md.getAlgorithm());
+	System.out.println("provider :"+md.getProvider());
+	System.out.println("tostring :"+md.toString());
+	String input="";
+	md.update(input.getBytes());
+	byte[] output=md.digest();
+	BigInteger num=new BigInteger(1,output);
+	String hextext=num.toString(16);
+	System.out.println("MD5"+"("+input+") = "+hextext);
+	input="abc";
+	md.update(input.getBytes());
+	output=md.digest();
+	System.out.println("MD5"+"("+input+")="+bytestohex(output));
+	input="abcdefghijklmnopqrstuvwxyz";
+	md.update(input.getBytes());
+	output=md.digest();
+	System.out.println("MD5"+"("+input+")="+bytestohex(output));
+}
+public static String bytestohex(byte[] output)
+{
+	BigInteger num=new BigInteger(1,output);
+	String hextext=num.toString(16);
+	return hextext;
+}
+}

@@ -1,0 +1,76 @@
+import java.util.*;
+public class HillCipher
+{
+	static float [][] decrypt=new float[3][1];
+	static float [][] res=new float[3][1];
+	static float [][] mes=new float[3][1];
+	static float [][] a=new float[3][3];
+	static float [][] b=new float[3][3];
+	static Scanner sc=new Scanner(System.in);
+	public static void main(String args[])throws Exception
+	{
+		getkeymes();
+		for(int i=0;i<3;++i)
+			for(int j=0;j<1;++j)
+				for(int k=0;k<3;++k)
+					res[i][j]=res[i][j]+a[i][k]*mes[k][j];
+		System.out.println("Encrypted string:");
+		for(int i=0;i<3;++i)
+			System.out.print((char)(res[i][0]%26+97));
+		inverse();
+		for(int i=0;i<3;++i)
+			for(int j=0;j<1;++j)
+				for(int k=0;k<3;++k)
+					decrypt[i][j]=decrypt[i][j]+b[i][k]*res[k][j];
+		System.out.println("Decrypted string:");
+		for(int i=0;i<3;++i)
+			System.out.print((char)(decrypt[i][0]%26+97));
+	}
+	public static void getkeymes()
+	{
+		System.out.println("Enter an invertible 3X3 matrix:");
+		for(int i=0;i<3;++i)
+			for(int j=0;j<3;++j)
+				a[i][j]=sc.nextFloat();
+		System.out.println("Enter a 3 letter string:");
+		String msg=sc.next();
+		for(int i=0;i<3;++i)
+			mes[i][0]=msg.charAt(i)-97;
+	}
+	public static void inverse()
+	{
+		float p,q;
+		float[][]c=a;
+		for(int i=0;i<3;++i) {
+			for(int j=0;j<3;++j) {
+				if(i==j)
+					b[i][j]=1;
+				else
+					b[i][j]=0;
+			}
+		}
+		for(int k=0;k<3;++k) {
+			for(int i=0;i<3;++i) {
+				p=c[i][k];
+				q=c[k][k];
+				for(int j=0;j<3;++j) {
+					if(i!=k) {
+						c[i][j]=c[i][j]*q-p*c[k][j];
+						b[i][j]=b[i][j]*q-p*b[k][j];
+					}
+				}
+			}
+		}
+		for(int i=0;i<3;++i)
+			for(int j=0;j<3;++j)
+				b[i][j]=b[i][j]/c[i][i];
+		
+		System.out.println("\nInverse matrix:");
+		for(int i=0;i<3;++i) {
+			for(int j=0;j<3;++j) {
+				System.out.print(b[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}	
+}

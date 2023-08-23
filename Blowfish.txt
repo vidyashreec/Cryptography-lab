@@ -1,0 +1,20 @@
+import java.util.*;
+import javax.crypto.*;
+public class blow {
+public static void main(String args[])throws Exception
+{
+	KeyGenerator kg=KeyGenerator.getInstance("BLOWFISH");
+	SecretKey sk=kg.generateKey();
+	Cipher c=Cipher.getInstance("BLOWFISH");
+	c.init(Cipher.ENCRYPT_MODE,sk);
+	Scanner sc=new Scanner(System.in);
+	System.out.print("Enter msg: ");
+	String input=sc.nextLine();
+	byte[] encrypt=c.doFinal(input.getBytes());
+	c.init(Cipher.DECRYPT_MODE,sk);
+	byte[] decrypt=c.doFinal(encrypt);
+	System.out.println("Encrypted msg: "+new String(encrypt));
+	System.out.println("Decrypted msg: "+new String(decrypt));
+
+}
+}

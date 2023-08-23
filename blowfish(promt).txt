@@ -1,0 +1,17 @@
+import javax.crypto.*;
+import javax.swing.JOptionPane;
+public class blowfish {
+public static void main(String args[])throws Exception
+{
+	KeyGenerator kg=KeyGenerator.getInstance("BLOWFISH");
+	SecretKey sk=kg.generateKey();
+	Cipher c=Cipher.getInstance("BLOWFISH");
+	c.init(Cipher.ENCRYPT_MODE, sk);
+	String input=JOptionPane.showInputDialog("Enter msg");
+	byte[] encrypt=c.doFinal(input.getBytes());
+	c.init(Cipher.DECRYPT_MODE, sk);
+	byte[] decrypt=c.doFinal(encrypt);
+	JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),"\nEncryptede msg is :"+new String(encrypt)+"\nDecrypted msg :"+new String(decrypt));
+    System.exit(0);
+}
+}

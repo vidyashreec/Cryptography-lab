@@ -1,0 +1,33 @@
+import java.math.BigInteger;
+import java.util.Scanner;
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+
+public class AES {
+public static void main(String args[])throws Exception
+{
+	Scanner sc=new Scanner(System.in);
+	System.out.println("Enter the msg :");
+	String msg=sc.nextLine();
+	KeyGenerator kg=KeyGenerator.getInstance("AES");
+	kg.init(128);
+	SecretKey sk=kg.generateKey();
+	byte[] raw=sk.getEncoded();
+	SecretKeySpec sks=new SecretKeySpec(raw,"AES");
+	Cipher c=Cipher.getInstance("AES");
+	c.init(Cipher.ENCRYPT_MODE, sk);
+	byte[] encrypt=c.doFinal(msg.getBytes());
+	System.out.println("Encrypted msg :"+new String(encrypt));
+	System.out.println("Encrypted msg in hex:"+hex(encrypt));
+	c.init(Cipher.DECRYPT_MODE, sks);
+	byte[] decrypt=c.doFinal(encrypt);
+	System.out.println("Decrypted msg :"+new String(decrypt));
+	sc.close();
+}
+public static String hex(byte[] b)
+{
+	BigInteger num=new BigInteger(1,b);
+	String hashtext=num.toString(16);
+	return hashtext;
+}
+}

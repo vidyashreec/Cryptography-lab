@@ -1,0 +1,32 @@
+import java.math.BigInteger;
+import java.security.MessageDigest;
+
+public class sha {
+public static void main(String args[])throws Exception
+{
+	MessageDigest md=MessageDigest.getInstance("SHA1");
+	System.out.println("Algorithom :"+md.getAlgorithm());
+	System.out.println("provider :"+md.getProvider()); 
+	System.out.println("tostring :"+md.toString());
+	String input="";
+	md.update(input.getBytes());
+	byte[] output=md.digest();
+	BigInteger num=new BigInteger(1,output);
+	String hextext=num.toString(16);
+	System.out.println("SHA1"+"("+input+") = "+hextext);
+	input="abc";
+	md.update(input.getBytes());
+	output=md.digest();
+	System.out.println("SHA1"+"("+input+")="+bytestohex(output));
+	input="abcdefghijklmnopqrstuvwxyz";
+	md.update(input.getBytes());
+	output=md.digest();
+	System.out.println("SHA1"+"("+input+")="+bytestohex(output));
+}
+public static String bytestohex(byte[] b)
+{
+	BigInteger num=new BigInteger(1,b);
+	String hashtext=num.toString(16);
+	return hashtext;
+}
+}
